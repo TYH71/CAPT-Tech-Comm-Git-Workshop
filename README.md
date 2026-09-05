@@ -37,7 +37,9 @@ and publishes it to GitHub Pages.
 ## Activity: create your profile card
 
 You need Git and a GitHub account. Local preview also requires Node.js 20 and Python 3.
+The builder uses Node.js built-in modules; no package installation is needed.
 Replace `your-name` below with your lowercase GitHub username, using letters, numbers, and hyphens.
+Folder names must start and end with a letter or number, with no consecutive hyphens.
 
 ### Clone the repository
 
@@ -97,7 +99,9 @@ Edit `participants/your-name/profile.json`:
 | `photo` | Local PNG, JPG, or WebP filename | 100 |
 | `photoAlt` | Description of your photo | 120 |
 
-All five fields are required strings. Only `photo` may be empty: it uses the Tech Comm logo
+All five fields are required strings; extra fields are rejected. The Telegram handle must
+contain 1–32 letters, numbers, or underscores after `@` (33 characters total at most).
+Only `photo` may be empty: it uses the Tech Comm logo
 until you add a photo. For your own image, put `portrait.jpg` in your folder and set `photo`
 to `"portrait.jpg"`. Use a simple filename containing letters, numbers, underscores, or hyphens.
 Remote URLs, subdirectories, and symbolic links are not supported.
@@ -114,6 +118,8 @@ From the repository root:
 node scripts/build-collage.mjs
 python3 -m http.server 8000 --directory dist
 ```
+
+On Windows, use `py -m http.server 8000 --directory dist` for the server command.
 
 Open [the local gallery](http://localhost:8000), or visit `http://localhost:8000/participants/your-name/index.html` for your standalone card.
 Run the build again after changing JSON or photos, then refresh your browser.
@@ -171,6 +177,8 @@ Original organiser logos keep their proportions and colors. The gallery stays li
 regardless of system theme. Generated `dist/` is ignored by Git.
 
 Existing HTML-only participant folders must move their details into `profile.json`.
+Older JSON profiles must add `telegram` and remove the former `heading` and `bounty`
+fields. Use `template/profile.json` as the current schema.
 
 ## For the host
 
@@ -189,11 +197,14 @@ node scripts/build-collage.mjs
 The checks cover empty and populated galleries, branding assets, escaped text,
 photo copying, malformed JSON, and invalid fields and image paths.
 
+The deployment workflow runs the builder on pushes to `main` and manual runs;
+it does not run on pull requests or execute the regression checks. Run the checks
+locally before merging generator or template changes. Invalid participant data
+fails the build and prevents that run from deploying.
+
 ## Reference workshop
 
 Adapted from [AngKS's SUTD Git Gud workshop](https://github.com/AngKS/SUTD-Git-Gud-2026-Workshop).
 See its [original activity website](https://angks.github.io/SUTD-Git-Gud-2026-Workshop/)
 for the source workshop. This CAPT version uses its own branding and JSON submissions.
 Reference slide decks and illustrations are not bundled in this repository.
-
-Profiles now require `telegram`; remove the former `heading` and `bounty` fields when migrating.
