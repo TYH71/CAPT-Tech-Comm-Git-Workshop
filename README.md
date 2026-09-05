@@ -113,9 +113,6 @@ Thank you to everyone who has contributed to the workshop!
   <img src="https://contrib.rocks/image?repo=TYH71/CAPT-Tech-Comm-Git-Workshop" alt="Workshop contributors" />
 </a>
 
-## Reference workshop
+## Credits
 
-Adapted from [AngKS's SUTD Git Gud workshop](https://github.com/AngKS/SUTD-Git-Gud-2026-Workshop).
-See its [original activity website](https://angks.github.io/SUTD-Git-Gud-2026-Workshop/)
-for the source workshop. This CAPT version uses its own branding and JSON submissions.
-Reference slide decks and illustrations are not bundled in this repository.
+[Tan Yu Hoe](https://www.linkedin.com/in/yu-hoe-tan/) — Training and Development Vice-Director
