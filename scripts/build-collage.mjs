@@ -1,17 +1,5 @@
 #!/usr/bin/env node
-/**
- * build-collage.mjs
- * ---------------------------------------------------------------------------
- * Scans participants/ and builds a mobile-responsive "Contributor Wall"
- * collage into dist/ for GitHub Pages.
- *
- * Each participant folder (participants/<name>/index.html) is copied as-is
- * into dist/participants/<name>/ and shown as an isolated <iframe> card, so
- * whatever wild CSS someone writes can never break the gallery layout.
- *
- * No npm dependencies — runs on a clean Node 18/20.
- * ---------------------------------------------------------------------------
- */
+/** Build the Contributor Wall from participant JSON and a shared poster template. */
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -31,41 +19,46 @@ const escapeHtml = (s) =>
   );
 
 async function findParticipants() {
-  let entries;
-  try {
-    entries = await fs.readdir(PARTICIPANTS_DIR, { withFileTypes: true });
-  } catch {
-    return [];
-  }
+  const entries = await fs.readdir(PARTICIPANTS_DIR, { withFileTypes: true });
   const people = [];
-  for (const e of entries) {
-    if (!e.isDirectory()) continue;
-    const indexPath = path.join(PARTICIPANTS_DIR, e.name, "index.html");
-    try {
-      await fs.access(indexPath);
-      people.push(e.name);
-    } catch {
-      // folder without an index.html — skip it
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const folder = path.join(PARTICIPANTS_DIR, entry.name);
+    const source = path.join(folder, "profile.json");
+    const fail = (message) => { throw new Error(`${source}: ${message}`); };
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.name)) fail("folder name must use lowercase letters, numbers, and hyphens");
+    let data;
+    try { data = JSON.parse(await fs.readFile(source, "utf8")); }
+    catch (error) { fail(`cannot read valid JSON: ${error.message}`); }
+    if (!data || typeof data !== "object" || Array.isArray(data)) fail("expected a JSON object");
+    const limits = { name: 40, heading: 12, tagline: 40, bounty: 20, photo: 100, photoAlt: 120 };
+    for (const key of Object.keys(data)) if (!Object.hasOwn(limits, key)) fail(`unknown field: ${key}`);
+    for (const [key, max] of Object.entries(limits)) {
+      if (typeof data[key] !== "string" || data[key].length > max || (key !== "photo" && !data[key].trim())) {
+        fail(`${key} must be ${key === "photo" ? "a" : "a non-empty"} string of at most ${max} characters`);
+      }
     }
+    let photoPath;
+    if (data.photo) {
+      if (!/^[a-zA-Z0-9_-]+\.(png|jpe?g|webp)$/i.test(data.photo)) fail("photo must be a local PNG, JPG, or WebP filename");
+      photoPath = path.join(folder, data.photo);
+      const stat = await fs.lstat(photoPath).catch(() => null);
+      if (!stat?.isFile() || stat.isSymbolicLink()) fail("photo must exist as a regular file in your participant folder");
+    }
+    people.push({ slug: entry.name, data, photoPath });
   }
-  // Alphabetical, but keep the seed "example" at the very end.
-  people.sort((a, b) => {
-    if (a === "example") return 1;
-    if (b === "example") return -1;
-    return a.toLowerCase().localeCompare(b.toLowerCase());
-  });
-  return people;
+  return people.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
-function card(name) {
-  const safe = escapeHtml(name);
-  const href = `participants/${encodeURIComponent(name)}/index.html`;
+function card({ slug, data }) {
+  const safe = escapeHtml(data.name);
+  const href = `participants/${slug}/index.html`;
   return `
         <a class="card" href="${href}" target="_blank" rel="noopener">
           <div class="frame">
             <iframe src="${href}" title="${safe}'s workshop poster" loading="lazy" scrolling="no" tabindex="-1"></iframe>
           </div>
-          <div class="handle">@${safe}</div>
+          <div class="handle">${safe}</div>
         </a>`;
 }
 
@@ -75,7 +68,7 @@ function page(people) {
   const emptyState = `
         <div class="empty">
           <h2>Your first PR belongs here.</h2>
-          <p>Copy the starter poster, make it yours, and open a pull request. Once merged, it joins the wall.</p>
+          <p>Copy the JSON template, add your details, and open a pull request. Once merged, it joins the wall.</p>
           <a class="pill link" href="${REPO_URL}/tree/main/template" target="_blank" rel="noopener">Get the template</a>
         </div>`;
 
@@ -197,23 +190,22 @@ function page(people) {
 }
 
 async function main() {
-  // Fresh dist/
+  // Validate all submissions before replacing the previous build.
+  const people = await findParticipants();
+  const template = await fs.readFile(path.join(ROOT, "template/index.html"), "utf8");
   await fs.rm(DIST, { recursive: true, force: true });
   await fs.mkdir(DIST, { recursive: true });
-
   await fs.cp(path.join(ROOT, "assets"), path.join(DIST, "assets"), { recursive: true });
-
-  const people = await findParticipants();
-
-  // Copy each participant folder verbatim into dist/participants/<name>/
-  const distParticipants = path.join(DIST, "participants");
-  await fs.mkdir(distParticipants, { recursive: true });
-  for (const name of people) {
-    await fs.cp(
-      path.join(PARTICIPANTS_DIR, name),
-      path.join(distParticipants, name),
-      { recursive: true }
-    );
+  await fs.copyFile(path.join(ROOT, "template/style.css"), path.join(DIST, "assets/poster.css"));
+  await fs.copyFile(path.join(ROOT, "template/paper.png"), path.join(DIST, "assets/paper.png"));
+  for (const { slug, data, photoPath } of people) {
+    const destination = path.join(DIST, "participants", slug);
+    await fs.mkdir(destination, { recursive: true });
+    const values = { ...data, photo: photoPath ? data.photo : "../../assets/tech-comm-logo.jpg" };
+    if (!photoPath) values.photoAlt = "Tech Comm logo";
+    const html = template.replace(/\{\{(\w+)\}\}/g, (_, key) => escapeHtml(values[key]));
+    await fs.writeFile(path.join(destination, "index.html"), html);
+    if (photoPath) await fs.copyFile(photoPath, path.join(destination, data.photo));
   }
 
   await fs.writeFile(path.join(DIST, "index.html"), page(people), "utf8");
@@ -221,7 +213,7 @@ async function main() {
   await fs.writeFile(path.join(DIST, ".nojekyll"), "", "utf8");
 
   console.log(`✅ Built collage with ${people.length} participant(s):`);
-  for (const p of people) console.log(`   • ${p}`);
+  for (const p of people) console.log(`   • ${p.slug}`);
   console.log(`📁 Output: ${path.relative(ROOT, DIST)}/`);
 }
 

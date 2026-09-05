@@ -1,15 +1,11 @@
-/* CAPT 15CSC Tech Comm Git Workshop: participant poster styles.
-   Edit this file in participants/<your-name>/ to personalise your poster.
-   The gallery embeds it in an iframe, so these styles affect your poster only.
-   cqi units scale with #poster-wrapper: 1cqi is 1% of its width.
-   Preview both the standalone poster and the Contributor Wall after edits.
-*/
+/* Shared poster styles. Participants edit profile.json; maintainers edit this file. */
 
-/* The viewport is the browser window, or the gallery iframe when embedded. */
+
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a; /* the dark frame around your poster */
+    background-color: #f5efe3;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -19,11 +15,12 @@ body {
     align-items: center;
 }
 
-/* Keep the 3:4 shape aligned with the gallery preview. */
+
 #poster-wrapper {
-    height: 80vh;
+    width: min(100vw, 75dvh);
+    height: auto;
     aspect-ratio: 3 / 4;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+
     container-type: inline-size;
 }
 
@@ -31,11 +28,11 @@ body {
     width: 100%;
     height: 100%;
 
-    background-image: url("paper.png"); /* the aged-paper texture */
+    background-image: url("paper.png");
     background-size: cover;
     background-position: center;
 
-    color: #3b2317; /* main ink color */
+    color: #3b2317;
     font-family: "Georgia", "Times New Roman", serif;
     text-transform: uppercase;
     text-align: center;
@@ -47,7 +44,7 @@ body {
     align-items: center;
 }
 
-/* Longer headings may need a smaller font-size or letter-spacing. */
+
 .header-section {
     margin-top: 1.9cqi;
     width: 100%;
@@ -55,15 +52,15 @@ body {
     flex-shrink: 0;
 }
 .header-text {
-    font-size: 17cqi;
+    font-size: 10cqi;
     font-weight: 900;
     letter-spacing: 0.9cqi;
     transform: scaleY(0.9);
     line-height: 1;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
-/* Tall photos are clipped by the image border; check your chosen crop. */
+
 .image-section {
     margin-top: 3.2cqi;
     width: 100%;
@@ -71,7 +68,7 @@ body {
 }
 .image-border {
     width: 100%;
-    max-height: calc(80vh / 3);
+    height: 39cqi;
     border: 1.1cqi solid #3b2317;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.2);
@@ -79,11 +76,12 @@ body {
 }
 .image-border img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
     display: block;
 }
 
-/* Keep the tagline short because this row does not wrap. */
+
 .banner-section {
     margin-top: 3.7cqi;
     width: 100%;
@@ -94,12 +92,12 @@ body {
     flex-shrink: 0;
 }
 .banner-text {
-    font-size: 6.7cqi;
+    font-size: 4cqi;
     font-weight: bold;
     letter-spacing: 0.5cqi;
     flex-grow: 1;
     margin: 0 1.9cqi;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
     text-align: center;
 }
 .decoration-left,
@@ -111,7 +109,7 @@ body {
     flex-shrink: 0;
 }
 
-/* Reduce font-size for longer names to avoid clipping. */
+
 .name-section {
     margin-top: 1.4cqi;
     width: 100%;
@@ -119,13 +117,13 @@ body {
     flex-shrink: 0;
 }
 .name-text {
-    font-size: 11cqi;
+    font-size: 6cqi;
     font-weight: 800;
-    transform: scaleX(0.85);
+
     letter-spacing: -0.2cqi;
 }
 
-/* Auto margin keeps the amount and workshop credit at the bottom. */
+
 .footer-section {
     margin-top: auto;
     margin-bottom: 2.8cqi;
@@ -136,12 +134,12 @@ body {
     flex-shrink: 0;
 }
 .bounty-row {
-    font-size: 7.9cqi;
+    font-size: 5cqi;
     font-weight: 800;
     display: flex;
     justify-content: center;
     align-items: center;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
     overflow: hidden;
     width: 100%;
 }

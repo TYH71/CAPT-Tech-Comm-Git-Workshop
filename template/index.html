@@ -3,49 +3,37 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Bounty Poster</title>
-        <link rel="stylesheet" href="style.css" />
+        <title>{{name}} | CAPT Git Workshop</title>
+        <link rel="stylesheet" href="../../assets/poster.css" />
     </head>
     <body>
-        <!--
-          CAPT 15CSC Tech Comm Git Workshop
-          Copy template/ to participants/<your-name>/ before editing.
-          Personalise the poster using the comments below, then commit,
-          push your branch, and open a pull request. After it is merged,
-          your poster appears on the Contributor Wall.
-        -->
+        <!-- Shared layout. Participants edit profile.json, not this file. -->
         <div id="poster-wrapper">
             <div class="bounty-poster">
                 <div class="header-section">
-                    <div class="header-text">WANTED</div>
-                    <!-- Choose a short heading so it fits on one line. -->
+                    <div class="header-text">{{heading}}</div>
                 </div>
 
                 <div class="image-section">
                     <div class="image-border">
-                        <!-- Add your photo to this folder as profile.png, or update src.
-                             Update alt to describe the image for screen readers. -->
-                        <img src="profile.png" alt="Profile" />
+                        <img src="{{photo}}" alt="{{photoAlt}}" />
                     </div>
                 </div>
 
                 <div class="banner-section">
                     <span class="decoration-left">~</span>
-                    <span class="banner-text">DEAD OR ALIVE</span>
-                    <!-- Write a short tagline; long text may be clipped. -->
+                    <span class="banner-text">{{tagline}}</span>
                     <span class="decoration-right">~</span>
                 </div>
 
                 <div class="name-section">
-                    <div class="name-text">YOUR NAME</div>
-                    <!-- Replace YOUR NAME; reduce .name-text font-size if needed. -->
+                    <div class="name-text">{{name}}</div>
                 </div>
 
                 <div class="footer-section">
                     <div class="bounty-row">
                         <span class="currency-symbol">฿</span>
-                        <span class="bounty-amount">1,000,000,000-</span>
-                        <!-- Choose a fictional bounty amount for your poster. -->
+                        <span class="bounty-amount">{{bounty}}</span>
                     </div>
                     <div class="workshop-brand">CAPT 15CSC Tech Comm</div>
                 </div>
