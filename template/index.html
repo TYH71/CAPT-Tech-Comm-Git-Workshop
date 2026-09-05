@@ -1,43 +1,14 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{{name}} | CAPT Git Workshop</title>
-        <link rel="stylesheet" href="../../assets/poster.css" />
-    </head>
-    <body>
-        <!-- Shared layout. Participants edit profile.json, not this file. -->
-        <div id="poster-wrapper">
-            <div class="bounty-poster">
-                <div class="header-section">
-                    <div class="header-text">{{heading}}</div>
-                </div>
-
-                <div class="image-section">
-                    <div class="image-border">
-                        <img src="{{photo}}" alt="{{photoAlt}}" />
-                    </div>
-                </div>
-
-                <div class="banner-section">
-                    <span class="decoration-left">~</span>
-                    <span class="banner-text">{{tagline}}</span>
-                    <span class="decoration-right">~</span>
-                </div>
-
-                <div class="name-section">
-                    <div class="name-text">{{name}}</div>
-                </div>
-
-                <div class="footer-section">
-                    <div class="bounty-row">
-                        <span class="currency-symbol">฿</span>
-                        <span class="bounty-amount">{{bounty}}</span>
-                    </div>
-                    <div class="workshop-brand">CAPT 15CSC Tech Comm</div>
-                </div>
-            </div>
-        </div>
-    </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>{{name}} | CAPT Git Workshop</title>
+  <link rel="stylesheet" href="../../assets/profile.css" />
+</head>
+<body class="profile-page">
+  <!-- Shared layout. Participants edit profile.json. -->
+  <main aria-label="Participant profile">{{card}}</main>
+</body>
 </html>
