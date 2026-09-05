@@ -119,6 +119,7 @@ body {
 .name-text {
     font-size: 6cqi;
     font-weight: 800;
+    overflow-wrap: anywhere;
 
     letter-spacing: -0.2cqi;
 }
