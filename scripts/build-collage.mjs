@@ -23,22 +23,12 @@ const PARTICIPANTS_DIR = path.join(ROOT, "participants");
 const DIST = path.join(ROOT, "dist");
 
 // Repo / Pages info (used for links in the page chrome)
-const REPO_URL = "https://github.com/AngKS/SUTD-Git-Gud-2026-Workshop";
-
-// A small palette so every card gets its own accent colour.
-const PALETTE = ["#FF5A5A", "#5C7CFA", "#FFB020", "#42C76A", "#9B6BFF", "#FF7AB8", "#00BCD4"];
+const REPO_URL = "https://github.com/TYH71/CAPT-Tech-Comm-Git-Workshop";
 
 const escapeHtml = (s) =>
   String(s).replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
   );
-
-// Deterministic colour from a name so a person always gets the same accent.
-const colourFor = (name) => {
-  let h = 0;
-  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
-  return PALETTE[h % PALETTE.length];
-};
 
 async function findParticipants() {
   let entries;
@@ -69,15 +59,13 @@ async function findParticipants() {
 
 function card(name) {
   const safe = escapeHtml(name);
-  const accent = colourFor(name);
   const href = `participants/${encodeURIComponent(name)}/index.html`;
   return `
-        <a class="card" href="${href}" target="_blank" rel="noopener" style="--accent:${accent}">
+        <a class="card" href="${href}" target="_blank" rel="noopener">
           <div class="frame">
             <iframe src="${href}" title="${safe}'s bounty poster" loading="lazy" scrolling="no" tabindex="-1"></iframe>
-            <span class="open">View ↗</span>
           </div>
-          <div class="handle"><span class="dot"></span>@${safe}</div>
+          <div class="handle">@${safe}</div>
         </a>`;
 }
 
@@ -86,7 +74,9 @@ function page(people) {
   const cards = people.map(card).join("\n");
   const emptyState = `
         <div class="empty">
-          <p>No bounties yet — be the first! Open a pull request and your poster appears right here.</p>
+          <h2>Your first PR belongs here.</h2>
+          <p>Copy the starter poster, make it yours, and open a pull request. Once merged, it joins the wall.</p>
+          <a class="pill link" href="${REPO_URL}/tree/main/template" target="_blank" rel="noopener">Get the template</a>
         </div>`;
 
   return `<!doctype html>
@@ -94,213 +84,101 @@ function page(people) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GIT GUD — Wall of Bounties</title>
-<meta name="description" content="Every bounty poster on this wall was shipped to main with a pull request. SUTD GIT GUD 2026." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<title>CAPT 15CSC Tech Comm | GIT GUD</title>
+<meta name="description" content="The CAPT 15CSC Tech Comm Wall of Bounties. Learn Git and GitHub by shipping your own poster with a pull request." />
+<meta name="color-scheme" content="light" />
 <style>
   :root {
-    --cream: #fbf0df;
-    --card-bg: #fff8ec;
-    --ink: #21190f;
-    --muted: #8a7c69;
-    --line: #eadfca;
-    --coral: #ff5a5a;
-    --blue: #5c7cfa;
-    --yellow: #ffc83d;
-    --green: #42c76a;
-    --purple: #9b6bff;
+    color-scheme: light;
+    --canvas: #f5efe3;
+    --surface: #fcfaf5;
+    --ink: #28231f;
+    --muted: #675c52;
+    --line: #ded5c7;
+    --maroon: #741b3c;
+    --yellow: #efdfa4;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--cream);
-    color: var(--ink);
-    font-family: "Poppins", system-ui, sans-serif;
-    line-height: 1.5;
-    overflow-x: hidden;
-  }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    position: relative;
-    overflow: hidden;
-    padding: clamp(2.5rem, 8vw, 5rem) 1.25rem clamp(1.5rem, 4vw, 2.5rem);
-    text-align: center;
-  }
-  .branch-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .hero > * { position: relative; z-index: 1; }
-  .wordmark {
-    font-family: "Fredoka", sans-serif;
-    font-weight: 700;
-    font-size: clamp(3rem, 13vw, 7.5rem);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-  .wordmark .git { color: var(--ink); }
-  .wordmark .gud { color: var(--coral); }
-  .tagline {
-    max-width: 40ch;
-    margin: 1rem auto 0;
-    font-size: clamp(1rem, 2.6vw, 1.2rem);
-    color: #6f6253;
-    font-weight: 500;
-  }
-  .pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
-    margin-top: 1.6rem;
-  }
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    background: var(--card-bg);
-    border: 2px solid var(--ink);
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-    color: var(--ink);
-    box-shadow: 3px 3px 0 rgba(33, 25, 15, 0.12);
-  }
-  .pill.count { background: var(--coral); color: #fff; border-color: var(--coral); }
-  .pill.link { transition: transform 0.12s ease; }
-  .pill.link:hover { transform: translateY(-2px); }
-  .pill .emoji { font-size: 1.05rem; }
-
-  /* ---------- Gallery ---------- */
-  .wall {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: clamp(1rem, 4vw, 2.5rem) clamp(0.9rem, 4vw, 2rem) 3rem;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 42vw, 230px), 1fr));
-    gap: clamp(0.8rem, 2.5vw, 1.4rem);
-  }
-  .card {
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-top: 6px solid var(--accent);
-    border-radius: 16px;
-    padding: 0.6rem 0.6rem 0.7rem;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 6px 18px rgba(33, 25, 15, 0.07);
-    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    line-height: 1.6;
   }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 28px rgba(33, 25, 15, 0.16);
-    border-color: var(--accent);
-  }
-  .frame {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    border-radius: 11px;
-    overflow: hidden;
-    background: #1a1a1a;
-  }
-  .frame iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    pointer-events: none; /* let the whole card be the link */
-  }
-  .open {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.62);
-    color: #fff;
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 0.22rem 0.5rem;
-    border-radius: 999px;
-    opacity: 0;
-    transition: opacity 0.14s ease;
-  }
-  .card:hover .open { opacity: 1; }
-  .handle {
+  /* White masthead preserves the supplied logos' original backgrounds. */
+  .masthead { background: #fff; border-bottom: 1px solid var(--line); }
+  .logos {
+    max-width: 1040px;
+    margin: auto;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
-    gap: 0.45rem;
-    font-weight: 600;
-    font-size: 0.92rem;
-    padding: 0 0.2rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    justify-content: space-between;
+    gap: 24px;
   }
-  .handle .dot {
-    flex: 0 0 auto;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
+  .logos img { display: block; object-fit: contain; height: auto; }
+  .capt-logo { width: 100px; }
+  .tech-logo { width: 180px; }
+  .hero { padding: 48px 24px 40px; text-align: center; }
+  .brand { margin: 0 0 16px; color: var(--maroon); font-weight: 650; font-size: 15px; }
+  .wordmark { margin: 0; font-size: clamp(3.5rem, 10vw, 6rem); line-height: 1; letter-spacing: -0.06em; font-weight: 850; }
+  .wordmark .gud { color: var(--maroon); }
+  .tagline { max-width: 44ch; margin: 20px auto 0; color: var(--muted); font-size: 18px; }
+  code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.9em; }
+  .pills { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
+  /* Buttons use 6px corners; poster frames use 8px; count is a compact badge. */
+  .pill { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; border: 1px solid var(--maroon); border-radius: 6px; color: var(--maroon); font-size: 14px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+  .pill.count { padding: 6px 12px; background: var(--yellow); border-color: transparent; border-radius: 999px; color: var(--ink); font-size: 13px; }
+  .pill.link:hover { background: var(--maroon); color: var(--surface); }
+  .pill.link:active { transform: scale(0.98); }
+  a:focus-visible { outline: 3px solid var(--maroon); outline-offset: 4px; }
+  .wall { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 24px 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+  .card { display: flex; flex-direction: column; gap: 12px; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; color: inherit; }
+  .card:hover { border-color: var(--maroon); }
+  .frame { position: relative; aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden; background: var(--canvas); }
+  .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .handle { font-size: 14px; font-weight: 650; overflow-wrap: anywhere; }
+  .empty { border-top: 1px solid var(--line); padding: 36px 16px 12px; text-align: center; }
+  .empty h2 { margin: 0; font-size: clamp(1.4rem, 4vw, 1.8rem); line-height: 1.25; letter-spacing: -0.025em; }
+  .empty p { max-width: 48ch; margin: 12px auto 20px; color: var(--muted); }
+  .empty .link { background: var(--maroon); color: var(--surface); }
+  .empty .link:hover { background: #57142d; }
+  footer { margin-top: auto; padding: 24px; text-align: center; color: var(--muted); font-size: 13px; }
+  @media (max-width: 767px) {
+    .logos { padding: 12px 20px; }
+    .capt-logo { width: 78px; }
+    .tech-logo { width: 150px; }
+    .hero { padding: 32px 20px; }
+    .tagline { font-size: 16px; }
+    .wall { padding: 0 20px 24px; }
+    .grid { grid-template-columns: 1fr; max-width: 420px; margin: auto; }
+    .empty { padding: 28px 0 8px; }
   }
-
-  .empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 3rem 1rem;
-    font-weight: 500;
+  @media (prefers-reduced-motion: reduce) {
+    .pill.link:active { transform: none; }
   }
-
-  /* ---------- Footer ---------- */
-  footer {
-    text-align: center;
-    padding: 2rem 1.25rem 3rem;
-    color: #8a7c69;
-    font-size: 0.9rem;
-  }
-  footer a { color: var(--blue); font-weight: 600; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
+  <div class="masthead">
+    <div class="logos" aria-label="Workshop organisers">
+      <img class="capt-logo" src="assets/capt-logo.png" width="338" height="356" alt="College of Alice &amp; Peter Tan, National University of Singapore" />
+      <img class="tech-logo" src="assets/tech-comm-logo.jpg" width="414" height="216" alt="Tech Comm" />
+    </div>
+  </div>
   <header class="hero">
-    <svg class="branch-bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <g fill="none" stroke="#e7d8bd" stroke-width="10" stroke-linecap="round">
-        <path d="M120 360 L120 180 Q120 120 180 120 L300 120" />
-        <path d="M120 250 Q120 200 170 200 L250 200" />
-        <circle cx="120" cy="360" r="10" fill="#e7d8bd" stroke="none" />
-        <circle cx="300" cy="120" r="22" />
-        <circle cx="250" cy="200" r="16" />
-        <path d="M1080 40 L1080 230 Q1080 290 1020 290 L900 290" />
-        <path d="M1080 150 Q1080 200 1030 200 L960 200" />
-        <circle cx="1080" cy="40" r="22" />
-        <circle cx="900" cy="290" r="16" />
-        <circle cx="960" cy="200" r="13" />
-      </g>
-    </svg>
+    <p class="brand">CAPT 15CSC Tech Comm</p>
     <h1 class="wordmark"><span class="git">GIT</span> <span class="gud">GUD</span></h1>
-    <p class="tagline">The Wall of Bounties — every poster here was shipped to <code>main</code> with a real pull request. 🏴‍☠️</p>
+    <p class="tagline">The Wall of Bounties. Your posters, shipped to <code>main</code> with real pull requests.</p>
     <div class="pills">
-      <span class="pill count"><span class="emoji">🤩</span>${count} legend${count === 1 ? "" : "s"} on the wall</span>
-      <span class="pill"><span class="emoji">🎓</span>SUTD · GIT GUD 2026</span>
-      <a class="pill link" href="${REPO_URL}" target="_blank" rel="noopener"><span class="emoji">⭐</span>View the repo</a>
+      <span class="pill count">${count} legend${count === 1 ? "" : "s"} on the wall</span>
+      <a class="pill link" href="${REPO_URL}" target="_blank" rel="noopener">View the repo</a>
     </div>
   </header>
 
@@ -309,8 +187,8 @@ function page(people) {
   </main>
 
   <footer>
-    Built automatically by a GitHub Actions workflow every time a PR is merged ·
-    <a href="${REPO_URL}" target="_blank" rel="noopener">source on GitHub</a>
+    CAPT 15CSC Tech Comm Git &amp; GitHub Workshop.<br />
+    Posters appear automatically after changes land on main.
   </footer>
 </body>
 </html>
@@ -321,6 +199,8 @@ async function main() {
   // Fresh dist/
   await fs.rm(DIST, { recursive: true, force: true });
   await fs.mkdir(DIST, { recursive: true });
+
+  await fs.cp(path.join(ROOT, "assets"), path.join(DIST, "assets"), { recursive: true });
 
   const people = await findParticipants();
 
