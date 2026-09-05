@@ -1,0 +1,164 @@
+/* =====================================================================
+   GIT GUD — Bounty Poster styles
+   ---------------------------------------------------------------------
+   You can tweak ANY value in here to make the poster your own:
+     • colors        -> change the hex codes (e.g. #3b2317)
+     • fonts         -> change the font-family
+     • sizes/spacing -> the cqi numbers (1cqi = 1% of the poster width)
+   Don't worry about breaking it — that's what version control is for. :)
+   ===================================================================== */
+
+/* --- Global Layout (Single Page View) --- */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a; /* the dark frame around your poster */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- The Viewport Wrapper --- */
+/* Defines the rendered size; cqi units inside resolve against this width */
+#poster-wrapper {
+    height: 80vh;
+    aspect-ratio: 3 / 4;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    container-type: inline-size;
+}
+
+/* --- The Poster --- */
+.bounty-poster {
+    width: 100%;
+    height: 100%;
+
+    background-image: url("paper.jpg"); /* the aged-paper texture */
+    background-size: cover;
+    background-position: center;
+
+    color: #3b2317; /* main ink color */
+    font-family: "Georgia", "Times New Roman", serif;
+    text-transform: uppercase;
+    text-align: center;
+
+    padding: 4.2cqi;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Sections --- */
+
+/* Header (the big WANTED / GOATED word) */
+.header-section {
+    margin-top: 1.9cqi;
+    width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.header-text {
+    font-size: 17cqi;
+    font-weight: 900;
+    letter-spacing: 0.9cqi;
+    transform: scaleY(0.9);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Image */
+.image-section {
+    margin-top: 3.2cqi;
+    width: 100%;
+    flex-shrink: 0;
+}
+.image-border {
+    width: 100%;
+    max-height: calc(80vh / 3);
+    border: 1.1cqi solid #3b2317;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+.image-border img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Banner */
+.banner-section {
+    margin-top: 3.7cqi;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.banner-text {
+    font-size: 6.7cqi;
+    font-weight: bold;
+    letter-spacing: 0.5cqi;
+    flex-grow: 1;
+    margin: 0 1.9cqi;
+    white-space: nowrap;
+    text-align: center;
+}
+.decoration-left,
+.decoration-right {
+    font-size: 8.8cqi;
+    font-weight: 300;
+    line-height: 0;
+    padding-bottom: 1.9cqi;
+    flex-shrink: 0;
+}
+
+/* Name */
+.name-section {
+    margin-top: 1.4cqi;
+    width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.name-text {
+    font-size: 11cqi;
+    font-weight: 800;
+    transform: scaleX(0.85);
+    letter-spacing: -0.2cqi;
+}
+
+/* Footer (bounty amount + SUTD logo) */
+.footer-section {
+    margin-top: auto;
+    margin-bottom: 2.8cqi;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+.bounty-row {
+    font-size: 7.9cqi;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+.currency-symbol {
+    font-family: serif;
+    margin-right: 1.9cqi;
+    font-weight: normal;
+}
+.sutd-logo {
+    height: 6cqi;
+    margin-top: 1.4cqi;
+    align-self: flex-end;
+}
