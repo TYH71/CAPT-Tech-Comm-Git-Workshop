@@ -7,6 +7,9 @@
 
 Make your own profile card by editing JSON, submit a pull request, and see it on the workshop website.
 
+[![View Contributor Wall](https://img.shields.io/badge/VIEW-CONTRIBUTOR%20WALL-741B3C?style=for-the-badge&labelColor=28231F)](https://tyh71.github.io/CAPT-Tech-Comm-Git-Workshop/)
+![Made at CAPT](https://img.shields.io/badge/MADE%20AT-CAPT-EFDFA4?style=for-the-badge&labelColor=28231F)
+
 [View the Contributor Wall](https://tyh71.github.io/CAPT-Tech-Comm-Git-Workshop/)
 </div>
 
@@ -100,6 +103,15 @@ Invalid profile data stops that run from deploying.
 
 For older submissions, use [template/profile.json](template/profile.json):
 move HTML-only profiles into JSON, add `telegram`, and remove `heading` and `bounty`.
+
+## Contributing
+
+Follow the [participant guide](participants/README.md) to add your profile card.
+Thank you to everyone who has contributed to the workshop!
+
+<a href="https://github.com/TYH71/CAPT-Tech-Comm-Git-Workshop/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=TYH71/CAPT-Tech-Comm-Git-Workshop" alt="Workshop contributors" />
+</a>
 
 ## Reference workshop
 
