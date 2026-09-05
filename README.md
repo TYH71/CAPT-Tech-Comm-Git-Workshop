@@ -36,6 +36,8 @@ and publishes it to GitHub Pages.
 
 ## Activity: create your profile card
 
+For a copyable template and submission steps, see the [participant guide](participants/README.md).
+
 You need Git and a GitHub account. Local preview also requires Node.js 20 and Python 3.
 The builder uses Node.js built-in modules; no package installation is needed.
 Replace `your-name` below with your lowercase GitHub username, using letters, numbers, and hyphens.
@@ -150,6 +152,7 @@ Check the Actions tab if your merged profile card has not appeared yet.
 ```text
 assets/                       Original CAPT and Tech Comm logos
 participants/
+  README.md                   Participant template and submission guide
   your-name/
     profile.json              Your editable details
     portrait.jpg              Optional photo
