@@ -7,7 +7,7 @@ Copy `template/` to `participants/<your-name>/`, edit `index.html` and
 `style.css`, and add your poster images. The gallery includes folders with
 an `index.html` and copies their assets into the published site.
 
-The gallery and starter poster use CAPT 15CSC Tech Comm branding. Gallery
+The Contributor Wall gallery and starter poster use CAPT 15CSC Tech Comm branding. Gallery
 links point to this repository. The gallery stays light in all system themes,
 with a beige canvas, maroon actions, and a muted yellow participant badge.
 Original CAPT and Tech Comm logos live in `assets/` and are copied to `dist/`

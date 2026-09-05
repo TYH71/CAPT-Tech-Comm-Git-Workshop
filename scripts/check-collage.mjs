@@ -21,6 +21,10 @@ try {
     assert.ok(empty.includes('assets/' + file));
     assert.deepEqual(await readFile(path.join(root, 'dist/assets', file)), await readFile(new URL('../assets/' + file, import.meta.url)));
   }
+  assert.match(empty, /Contributor Wall/);
+  assert.match(empty, /<title>CAPT 15CSC Tech Comm \| Git Workshop<\/title>/);
+  assert.doesNotMatch(empty, /GIT GUD/);
+  assert.doesNotMatch(empty, /Wall of Bounties/);
   assert.match(empty, /CAPT 15CSC Tech Comm/);
   assert.match(empty, /0 legends on the wall/);
   assert.match(empty, /Your first PR belongs here/);
@@ -30,7 +34,7 @@ try {
   await writeFile(path.join(root, 'participants/test-person/index.html'), '<h1>Test poster</h1>');
   const filled = await build();
   assert.match(filled, /1 legend on the wall/);
-  assert.match(filled, /title="test-person&#39;s bounty poster"|title="test-person's bounty poster"/);
+  assert.match(filled, /title="test-person&#39;s workshop poster"|title="test-person's workshop poster"/);
   assert.doesNotMatch(filled, /Your first PR belongs here/);
   assert.equal(await readFile(path.join(root, 'dist/participants/test-person/index.html'), 'utf8'), '<h1>Test poster</h1>');
   console.log('Collage checks passed: branding, empty state, participant count, and copied poster.');

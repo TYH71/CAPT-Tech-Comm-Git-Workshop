@@ -2,7 +2,7 @@
 /**
  * build-collage.mjs
  * ---------------------------------------------------------------------------
- * Scans participants/ and builds a mobile-responsive "Wall of Bounties"
+ * Scans participants/ and builds a mobile-responsive "Contributor Wall"
  * collage into dist/ for GitHub Pages.
  *
  * Each participant folder (participants/<name>/index.html) is copied as-is
@@ -63,7 +63,7 @@ function card(name) {
   return `
         <a class="card" href="${href}" target="_blank" rel="noopener">
           <div class="frame">
-            <iframe src="${href}" title="${safe}'s bounty poster" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            <iframe src="${href}" title="${safe}'s workshop poster" loading="lazy" scrolling="no" tabindex="-1"></iframe>
           </div>
           <div class="handle">@${safe}</div>
         </a>`;
@@ -84,8 +84,8 @@ function page(people) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CAPT 15CSC Tech Comm | GIT GUD</title>
-<meta name="description" content="The CAPT 15CSC Tech Comm Wall of Bounties. Learn Git and GitHub by shipping your own poster with a pull request." />
+<title>CAPT 15CSC Tech Comm | Git Workshop</title>
+<meta name="description" content="The CAPT 15CSC Tech Comm Contributor Wall. Learn Git and GitHub by shipping your own poster with a pull request." />
 <meta name="color-scheme" content="light" />
 <style>
   :root {
@@ -118,15 +118,15 @@ function page(people) {
     padding: 16px 24px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 24px;
   }
   .logos img { display: block; object-fit: contain; height: auto; }
-  .capt-logo { width: 100px; }
-  .tech-logo { width: 180px; }
+  .capt-logo { width: 76px; }
+  .tech-logo { width: 136px; }
   .hero { padding: 48px 24px 40px; text-align: center; }
-  .brand { margin: 0 0 16px; color: var(--maroon); font-weight: 650; font-size: 15px; }
-  .wordmark { margin: 0; font-size: clamp(3.5rem, 10vw, 6rem); line-height: 1; letter-spacing: -0.06em; font-weight: 850; }
+  .brand { margin: 0; color: var(--maroon); font-weight: 650; font-size: 15px; }
+  .wordmark { margin: 0; font-size: clamp(2.5rem, 8vw, 5.5rem); line-height: 1; letter-spacing: -0.06em; font-weight: 850; }
   .wordmark .gud { color: var(--maroon); }
   .tagline { max-width: 44ch; margin: 20px auto 0; color: var(--muted); font-size: 18px; }
   code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.9em; }
@@ -151,9 +151,10 @@ function page(people) {
   .empty .link:hover { background: #57142d; }
   footer { margin-top: auto; padding: 24px; text-align: center; color: var(--muted); font-size: 13px; }
   @media (max-width: 767px) {
-    .logos { padding: 12px 20px; }
-    .capt-logo { width: 78px; }
-    .tech-logo { width: 150px; }
+    .logos { padding: 16px 20px; flex-wrap: wrap; gap: 12px 24px; }
+    .brand { flex-basis: 100%; text-align: center; order: 1; }
+    .capt-logo { width: 64px; }
+    .tech-logo { width: 124px; }
     .hero { padding: 32px 20px; }
     .tagline { font-size: 16px; }
     .wall { padding: 0 20px 24px; }
@@ -169,13 +170,13 @@ function page(people) {
   <div class="masthead">
     <div class="logos" aria-label="Workshop organisers">
       <img class="capt-logo" src="assets/capt-logo.png" width="338" height="356" alt="College of Alice &amp; Peter Tan, National University of Singapore" />
+      <p class="brand">CAPT 15CSC Tech Comm</p>
       <img class="tech-logo" src="assets/tech-comm-logo.jpg" width="414" height="216" alt="Tech Comm" />
     </div>
   </div>
   <header class="hero">
-    <p class="brand">CAPT 15CSC Tech Comm</p>
-    <h1 class="wordmark"><span class="git">GIT</span> <span class="gud">GUD</span></h1>
-    <p class="tagline">The Wall of Bounties. Your posters, shipped to <code>main</code> with real pull requests.</p>
+    <h1 class="wordmark"><span class="git">Git</span> <span class="gud">Workshop</span></h1>
+    <p class="tagline">The Contributor Wall. Your posters, shipped to <code>main</code> with real pull requests.</p>
     <div class="pills">
       <span class="pill count">${count} legend${count === 1 ? "" : "s"} on the wall</span>
       <a class="pill link" href="${REPO_URL}" target="_blank" rel="noopener">View the repo</a>

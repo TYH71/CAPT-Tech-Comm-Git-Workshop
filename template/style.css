@@ -1,14 +1,11 @@
-/* =====================================================================
-   GIT GUD — Bounty Poster styles
-   ---------------------------------------------------------------------
-   You can tweak ANY value in here to make the poster your own:
-     • colors        -> change the hex codes (e.g. #3b2317)
-     • fonts         -> change the font-family
-     • sizes/spacing -> the cqi numbers (1cqi = 1% of the poster width)
-   Don't worry about breaking it — that's what version control is for. :)
-   ===================================================================== */
+/* CAPT 15CSC Tech Comm Git Workshop: participant poster styles.
+   Edit this file in participants/<your-name>/ to personalise your poster.
+   The gallery embeds it in an iframe, so these styles affect your poster only.
+   cqi units scale with #poster-wrapper: 1cqi is 1% of its width.
+   Preview both the standalone poster and the Contributor Wall after edits.
+*/
 
-/* --- Global Layout (Single Page View) --- */
+/* The viewport is the browser window, or the gallery iframe when embedded. */
 body {
     margin: 0;
     padding: 0;
@@ -22,8 +19,7 @@ body {
     align-items: center;
 }
 
-/* --- The Viewport Wrapper --- */
-/* Defines the rendered size; cqi units inside resolve against this width */
+/* Keep the 3:4 shape aligned with the gallery preview. */
 #poster-wrapper {
     height: 80vh;
     aspect-ratio: 3 / 4;
@@ -31,7 +27,6 @@ body {
     container-type: inline-size;
 }
 
-/* --- The Poster --- */
 .bounty-poster {
     width: 100%;
     height: 100%;
@@ -52,9 +47,7 @@ body {
     align-items: center;
 }
 
-/* --- Sections --- */
-
-/* Header (the big WANTED / GOATED word) */
+/* Longer headings may need a smaller font-size or letter-spacing. */
 .header-section {
     margin-top: 1.9cqi;
     width: 100%;
@@ -70,7 +63,7 @@ body {
     white-space: nowrap;
 }
 
-/* Image */
+/* Tall photos are clipped by the image border; check your chosen crop. */
 .image-section {
     margin-top: 3.2cqi;
     width: 100%;
@@ -90,7 +83,7 @@ body {
     display: block;
 }
 
-/* Banner */
+/* Keep the tagline short because this row does not wrap. */
 .banner-section {
     margin-top: 3.7cqi;
     width: 100%;
@@ -118,7 +111,7 @@ body {
     flex-shrink: 0;
 }
 
-/* Name */
+/* Reduce font-size for longer names to avoid clipping. */
 .name-section {
     margin-top: 1.4cqi;
     width: 100%;
@@ -132,7 +125,7 @@ body {
     letter-spacing: -0.2cqi;
 }
 
-/* Footer (bounty amount + workshop name) */
+/* Auto margin keeps the amount and workshop credit at the bottom. */
 .footer-section {
     margin-top: auto;
     margin-bottom: 2.8cqi;
