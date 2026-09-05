@@ -9,13 +9,16 @@ after your pull request is merged and deployment succeeds.
 You need Git and a GitHub account. Follow the [clone instructions](../README.md#clone-the-repository)
 first. If you do not have write access, fork the repository and clone your fork.
 
-Run all commands below from the repository root, not inside `participants/`.
-Replace `your-name` with your lowercase GitHub username. Use letters, numbers,
-and single hyphens between them; do not start or end with a hyphen.
+Run all commands below from the `CAPT-Tech-Comm-Git-Workshop` folder
+(the repository root). Replace `your-name` everywhere with your lowercase GitHub
+username, for example `alex-tan`. Use letters, numbers, and single hyphens
+between them; do not start or end with a hyphen.
 
 ```sh
-git switch -c participant/your-name
+git checkout -b participants/your-name
 ```
+
+This creates your branch and switches to it. Run it once, before editing.
 
 ## 2. Create your profile file
 
@@ -35,7 +38,8 @@ New-Item -ItemType Directory -Force participants/your-name
 Copy-Item template/profile.json participants/your-name/profile.json
 ```
 
-Edit `participants/your-name/profile.json` using this template:
+Open `participants/your-name/profile.json` in your text editor. Replace the
+example details below with your own, then save the file:
 
 ```json
 {
@@ -55,13 +59,14 @@ Edit `participants/your-name/profile.json` using this template:
 | `photoAlt` | A description of your photo, up to 120 characters. Keep this filled even without a photo. |
 | `telegram` | Your handle: `@` followed by 1–32 letters, numbers, or underscores. |
 
-Keep all five fields. Values must be strings in double quotes; only `photo` may
-be empty. Do not add extra fields, comments, or trailing commas.
+Keep all five fields and the double quotes around each value. Only `photo` may
+be empty. Do not add fields or comments, or put a comma after the last value.
 
 For your own photo, place a PNG, JPG/JPEG, or WebP file in your folder and set
 `photo` to its filename, such as `"portrait.jpg"`. Match the filename exactly.
 Use only letters, numbers, underscores, or hyphens before the extension.
-Image URLs, subdirectories, and symbolic links are not supported.
+Use an actual image file directly in your folder, not a web link, nested folder,
+or file shortcut (symbolic link).
 
 Your folder should look like this:
 
@@ -77,7 +82,7 @@ See [yuhoe/profile.json](yuhoe/profile.json) for a completed example.
 
 ## 3. Check and preview your card
 
-With Node.js 20 installed, validate your profile and build the site:
+With Node.js 20 installed, check your profile and generate the website:
 
 ```sh
 node scripts/build-collage.mjs
@@ -86,7 +91,7 @@ node scripts/build-collage.mjs
 If the build fails, fix the file and field named in the error, then run it again.
 No package installation is needed.
 
-To preview with Python 3:
+Optional: start a local preview with Python 3:
 
 ```sh
 python3 -m http.server 8000 --directory dist
@@ -94,20 +99,24 @@ python3 -m http.server 8000 --directory dist
 
 On Windows, use `py -m http.server 8000 --directory dist` instead.
 Open [localhost:8000](http://localhost:8000) and check your details, photo, and
-Telegram link. Rebuild and refresh after edits. Press `Ctrl+C` to stop the server.
+Telegram link. After edits, press `Ctrl+C`, run the build command again, and
+restart the server. Press `Ctrl+C` before moving to the Git commands below.
 
 ## 4. Commit, push, and open a pull request
+
+Run these commands to select your files, save a commit, and upload your branch:
 
 ```sh
 git add participants/your-name
 git commit -m "Add my workshop profile card"
-git push -u origin participant/your-name
+git push -u origin participants/your-name
 ```
 
 On GitHub, click **Compare & pull request**. Choose
 `TYH71/CAPT-Tech-Comm-Git-Workshop` as the base repository, `main` as the base
-branch, and your `participant/your-name` branch as the compare branch.
-Check that the diff contains only your profile and optional photo, then submit.
+branch, and your `participants/your-name` branch as the compare branch.
+In **Files changed**, check that only your profile and optional photo are included.
+Add a title such as **Add Alex’s profile card**, then click **Create pull request**.
 
 A maintainer reviews and merges your pull request. After the GitHub Pages
 deployment succeeds, refresh the Contributor Wall to see your card.
