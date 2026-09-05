@@ -1,158 +1,40 @@
-/* Shared poster styles. Participants edit profile.json; maintainers edit this file. */
-
-
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f5efe3;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Shared profile cards for the gallery and standalone participant pages. */
+.profile-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: #fcfaf5;
+  color: #28231f;
+  border: 1px solid #ded5c7;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  line-height: 1.5;
 }
-
-
-#poster-wrapper {
-    width: min(100vw, 75dvh);
-    height: auto;
-    aspect-ratio: 3 / 4;
-
-    container-type: inline-size;
+.profile-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
 }
-
-.bounty-poster {
-    width: 100%;
-    height: 100%;
-
-    background-image: url("paper.png");
-    background-size: cover;
-    background-position: center;
-
-    color: #3b2317;
-    font-family: "Georgia", "Times New Roman", serif;
-    text-transform: uppercase;
-    text-align: center;
-
-    padding: 4.2cqi;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.profile-photo--logo { object-fit: contain; background: #fff; padding: 12px; box-sizing: border-box; }
+.profile-details { padding: 16px 4px; overflow-wrap: anywhere; }
+.profile-tagline { margin: 0 0 6px; color: #675c52; font-size: 14px; }
+.profile-name { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.25; }
+.profile-telegram {
+  margin-top: auto;
+  padding: 12px 4px 4px;
+  border-top: 1px solid #ded5c7;
+  color: #741b3c;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: none;
 }
-
-
-.header-section {
-    margin-top: 1.9cqi;
-    width: 100%;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.header-text {
-    font-size: 10cqi;
-    font-weight: 900;
-    letter-spacing: 0.9cqi;
-    transform: scaleY(0.9);
-    line-height: 1;
-    overflow-wrap: anywhere;
-}
-
-
-.image-section {
-    margin-top: 3.2cqi;
-    width: 100%;
-    flex-shrink: 0;
-}
-.image-border {
-    width: 100%;
-    height: 39cqi;
-    border: 1.1cqi solid #3b2317;
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-}
-.image-border img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-
-.banner-section {
-    margin-top: 3.7cqi;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.banner-text {
-    font-size: 4cqi;
-    font-weight: bold;
-    letter-spacing: 0.5cqi;
-    flex-grow: 1;
-    margin: 0 1.9cqi;
-    overflow-wrap: anywhere;
-    text-align: center;
-}
-.decoration-left,
-.decoration-right {
-    font-size: 8.8cqi;
-    font-weight: 300;
-    line-height: 0;
-    padding-bottom: 1.9cqi;
-    flex-shrink: 0;
-}
-
-
-.name-section {
-    margin-top: 1.4cqi;
-    width: 100%;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-.name-text {
-    font-size: 6cqi;
-    font-weight: 800;
-    overflow-wrap: anywhere;
-
-    letter-spacing: -0.2cqi;
-}
-
-
-.footer-section {
-    margin-top: auto;
-    margin-bottom: 2.8cqi;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
-}
-.bounty-row {
-    font-size: 5cqi;
-    font-weight: 800;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-wrap: anywhere;
-    overflow: hidden;
-    width: 100%;
-}
-.currency-symbol {
-    font-family: serif;
-    margin-right: 1.9cqi;
-    font-weight: normal;
-}
-.workshop-brand {
-    font-family: system-ui, sans-serif;
-    font-size: 3cqi;
-    font-weight: 700;
-    margin-top: 1.4cqi;
-    align-self: flex-end;
-}
+.profile-telegram:hover { text-decoration: underline; }
+.profile-telegram:focus-visible { outline: 3px solid #741b3c; outline-offset: 3px; }
+.profile-page { margin: 0; padding: 24px; background: #f5efe3; color-scheme: light; }
+.profile-page * { box-sizing: border-box; }
+.profile-page main { width: 100%; max-width: 420px; margin: auto; }

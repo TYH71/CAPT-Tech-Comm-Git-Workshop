@@ -1,8 +1,7 @@
 {
   "name": "Your name",
-  "heading": "WANTED",
   "tagline": "Learning Git together",
-  "bounty": "1,000,000",
   "photo": "",
-  "photoAlt": "My portrait"
+  "photoAlt": "My portrait",
+  "telegram": "@your_username"
 }

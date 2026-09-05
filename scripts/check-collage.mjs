@@ -33,30 +33,34 @@ try {
   assert.match(empty, /https:\/\/github.com\/TYH71\/CAPT-Tech-Comm-Git-Workshop\/tree\/main\/template/);
   assert.doesNotMatch(empty, /SUTD|AngKS|—|–/);
   await mkdir(path.join(root, 'participants/test-person'), { recursive: true });
-  const profile = { name: 'Test <Person>', heading: 'WANTED', tagline: 'Learning Git', bounty: '1,000', photo: '', photoAlt: 'Portrait' };
+  const profile = { name: 'Test <Person>', tagline: 'Learning Git', telegram: '@test_person', photo: '', photoAlt: 'Portrait' };
   const source = path.join(root, 'participants/test-person/profile.json');
   await writeFile(source, JSON.stringify(profile));
   const filled = await build();
   assert.match(filled, /1 legend on the wall/);
   assert.match(filled, /Test &lt;Person&gt;/);
-  assert.doesNotMatch(filled, /Your first PR belongs here/);
-  const posterPath = path.join(root, 'dist/participants/test-person/index.html');
-  const poster = await readFile(posterPath, 'utf8');
-  assert.match(poster, /Test &lt;Person&gt;/);
-  assert.match(poster, /assets\/tech-comm-logo.jpg/);
-  assert.doesNotMatch(poster, /\{\{/);
+  assert.doesNotMatch(filled, /Your first PR belongs here|iframe|bounty/);
+  assert.match(filled, /https:\/\/t.me\/test_person/);
+  assert.match(filled, />@test_person</);
+  const profilePath = path.join(root, 'dist/participants/test-person/index.html');
+  const profileHtml = await readFile(profilePath, 'utf8');
+  assert.match(profileHtml, /Test &lt;Person&gt;/);
+  assert.match(profileHtml, /assets\/tech-comm-logo.jpg/);
+  assert.doesNotMatch(profileHtml, /\{\{/);
+  assert.match(profileHtml, /<h1 class="profile-name">/);
+  assert.match(profileHtml, /profile-photo--logo/);
   await copyFile(new URL('../assets/capt-logo.png', import.meta.url), path.join(root, 'participants/test-person/photo.png'));
   await writeFile(source, JSON.stringify({ ...profile, photo: 'photo.png' }));
   await build();
-  assert.match(await readFile(posterPath, 'utf8'), /src="photo.png"/);
+  assert.match(await readFile(profilePath, 'utf8'), /src="photo.png"/);
   assert.deepEqual(await readFile(path.join(root, 'dist/participants/test-person/photo.png')), await readFile(new URL('../assets/capt-logo.png', import.meta.url)));
-  for (const bad of [{ ...profile, name: '' }, { ...profile, photo: '../secret.png' }, { ...profile, photo: 'missing.png' }, { ...profile, extra: true }, null]) {
+  for (const bad of [{ ...profile, name: '' }, { ...profile, photo: '../secret.png' }, { ...profile, photo: 'missing.png' }, { ...profile, extra: true }, { ...profile, telegram: 'https://bad.example' }, { ...profile, telegram: '@bad/name' }, null]) {
     await writeFile(source, JSON.stringify(bad));
     assert.throws(() => execFileSync(process.execPath, [script], { stdio: 'pipe' }), /profile.json/);
   }
   await writeFile(source, '{');
   assert.throws(() => execFileSync(process.execPath, [script], { stdio: 'pipe' }), /valid JSON/);
-  console.log('Collage checks passed: branding, empty state, participant count, and copied poster.');
+  console.log('Collage checks passed: branding, empty state, participant count, and generated profile cards.');
 } finally {
   await rm(root, { recursive: true, force: true });
 }
