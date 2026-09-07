@@ -49,6 +49,7 @@ branch, fill in the template, and submit your card.
 | Repository (repo) | The project files and their saved history. |
 | Clone | Download the repository to your computer. |
 | Branch | A separate line of work for your changes. `main` is the shared version. |
+| Checkout / Switch (`git checkout` / `git switch`) | Move to another branch: `git switch main` or `git checkout main`. To create a branch and move to it, use `git switch -c participants/your-name` or `git checkout -b participants/your-name`. |
 | Stage (`git add`) | Select changes to include in your next commit. |
 | Commit | Save selected changes as a local checkpoint. |
 | Push | Upload your commits to GitHub. |
