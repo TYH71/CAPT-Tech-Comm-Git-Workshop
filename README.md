@@ -86,6 +86,8 @@ The participant path above is illustrative; `participants/yuhoe/` contains a wor
 4. Check the **Actions** tab to confirm deployment succeeded.
 
 Consider protecting `main` and requiring review before merges.
+Reviewers for all files are listed in [`.github/CODEOWNERS`](.github/CODEOWNERS).
+Enable **Require review from Code Owners** in branch protection to require their approval.
 Before merging generator or template changes, run from the repository root:
 
 ```sh
